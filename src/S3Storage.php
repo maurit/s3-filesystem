@@ -225,4 +225,21 @@ class S3Storage
     {
         return $this->cache->delete(MD5($key));
     }
+
+    /**
+     * @param string $key
+     * @return bool
+     * @throws \Psr\Cache\InvalidArgumentException
+     */
+    public function delete(string $key): bool
+    {
+        $this->forget($key);
+
+        $this->s3Client->deleteObject([
+            'Bucket' => $this->bucket,
+            'Key'    => $key
+        ]);
+
+        return true;
+    }
 }
