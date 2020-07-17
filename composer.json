@@ -1,0 +1,27 @@
+{
+  "name": "maurit/s3filesystem",
+  "type": "library",
+  "description": "S3 filesystem with caching & control",
+  "keywords": [
+    "S3",
+    "cache",
+    "file",
+    "storage"
+  ],
+  "homepage": "https://www.maurit.sk",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Adam Kabáč",
+      "email": "adam@kabac.me",
+      "homepage": "https://github.com/Adamko23",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "aws/aws-sdk-php": "^3.146",
+    "symfony/cache": "^5.1",
+    "symfony/http-foundation": "^5.1",
+    "symfony/finder": "^5.1"
+  }
+}
