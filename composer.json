@@ -25,5 +25,10 @@
     "symfony/cache": "^5.1",
     "symfony/http-foundation": "^5.1",
     "symfony/finder": "^5.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "ourcodeworld\\HelloComposer\\": "src/"
+    }
   }
 }
