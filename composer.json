@@ -1,6 +1,5 @@
 {
   "name": "maurit/s3filesystem",
-  "version": "0.0.2",
   "type": "library",
   "description": "S3 filesystem with caching & control",
   "keywords": [
