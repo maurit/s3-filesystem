@@ -9,7 +9,7 @@
     "file",
     "storage"
   ],
-  "homepage": "https://www.maurit.sk",
+  "homepage": "https://github.com/maurit/s3filesystem",
   "license": "MIT",
   "authors": [
     {
@@ -19,7 +19,6 @@
       "role": "Developer"
     }
   ],
-  "minimum-stability": "stable",
   "require": {
     "php": "^7.4",
     "aws/aws-sdk-php": "^3.146",
