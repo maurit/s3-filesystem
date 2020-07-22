@@ -6,6 +6,7 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Finder\Finder;
 use Aws\S3\S3Client;
+use Aws\S3\Exception\S3Exception;
 
 /**
  * Class S3Storage
@@ -87,6 +88,7 @@ class S3Storage
     /**
      * @param string $key
      * @return array
+     * @throws FileNotExistsException
      * @throws \Psr\Cache\InvalidArgumentException
      */
     public function getFile(string $key): array
@@ -106,6 +108,7 @@ class S3Storage
     /**
      * @param string $key
      * @return Response
+     * @throws FileNotExistsException
      * @throws \Psr\Cache\InvalidArgumentException
      */
     public function get(string $key): Response
@@ -120,6 +123,7 @@ class S3Storage
 
     /**
      * @param string $key
+     * @throws FileNotExistsException
      * @throws \Psr\Cache\InvalidArgumentException
      */
     public function render(string $key): void
@@ -130,6 +134,7 @@ class S3Storage
     /**
      * @param string $key
      * @param string|null $fileName
+     * @throws FileNotExistsException
      * @throws \Psr\Cache\InvalidArgumentException
      */
     public function getDownload(string $key, ?string $fileName = null): void
@@ -144,18 +149,31 @@ class S3Storage
     /**
      * @param string $key
      * @return array
+     * @throws FileNotExistsException
      */
     protected function getS3File(string $key): array
     {
-        $object = $this->s3Client->getObject([
-            'Bucket' => $this->bucket,
-            'Key'    => $key
-        ]);
+        try {
+            $object = $this->s3Client->getObject([
+                'Bucket' => $this->bucket,
+                'Key'    => $key
+            ]);
 
-        return [
-            'contentType' => $object['ContentType'],
-            'body'        => $object['Body']->getContents(),
-        ];
+            return [
+                'contentType' => $object['ContentType'],
+                'body'        => $object['Body']->getContents(),
+            ];
+        } catch (S3Exception $e) {
+            var_dump($e->getAwsErrorCode());
+            switch ($e->getAwsErrorCode()) {
+                case 'NoSuchKey':
+                    throw new FileNotExistsException("{$e->getAwsErrorMessage()} Key: {$key}", 404);
+                    break;
+                default:
+                    throw $e;
+                    break;
+            }
+        }
     }
 
     /**
