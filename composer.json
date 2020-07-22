@@ -18,6 +18,7 @@
       "role": "Developer"
     }
   ],
+  "minimum-stability": "stable",
   "require": {
     "aws/aws-sdk-php": "^3.146",
     "symfony/cache": "^5.1",
