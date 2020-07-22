@@ -2,6 +2,11 @@
 
 #### **Usage**
 
+**installation**
+`````
+composer require maurit/s3filesystem
+`````
+
 **declaration**
 `````
 $s3storage = new \Maurit\S3filesystem\S3Storage([
