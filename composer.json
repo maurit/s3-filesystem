@@ -27,7 +27,7 @@
   },
   "autoload": {
     "psr-4": {
-      "ourcodeworld\\HelloComposer\\": "src/"
+      "Maurit\\S3filesystem\\": "src/"
     }
   }
 }
