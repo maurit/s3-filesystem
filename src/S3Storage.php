@@ -96,7 +96,8 @@ class S3Storage
         $cache = $this->cache->getItem(MD5($key));
 
         if (!($data = $cache->get())) {
-            $cache->set($this->getS3File($key));
+            $file = $this->getS3File($key);
+            $cache->set($file);
             $this->cache->save($cache);
         } else {
             $cache->expiresAfter($this->cacheLifetime);
@@ -164,7 +165,6 @@ class S3Storage
                 'body'        => $object['Body']->getContents(),
             ];
         } catch (S3Exception $e) {
-            var_dump($e->getAwsErrorCode());
             switch ($e->getAwsErrorCode()) {
                 case 'NoSuchKey':
                     throw new FileNotExistsException("{$e->getAwsErrorMessage()} Key: {$key}", 404);
